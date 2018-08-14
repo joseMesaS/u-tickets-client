@@ -1,0 +1,7 @@
+.festivalItem {
+    color: black;
+}
+
+.festivalItem:hover {
+    text-decoration: none;
+}
