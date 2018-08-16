@@ -57,11 +57,13 @@ class EventsDetails extends PureComponent {
                     </Modal.Footer>
                 </Modal>
 
-                <Jumbotron className='header '>
+                <Jumbotron className='header ' style={{ backgroundImage: `url(${event.thumbnail})`, backgroundSize: 'contain', color: 'white' }}>
                     {!this.props.authenticated && <Link  className='log' to='/login'> login </Link>}
                     {this.props.authenticated && <a className='log' onClick={this.props.logout} >logout</a>}
-                    <h1>{event.name}</h1>
-                    <p>{event.description}</p>
+                    <div className="headings">
+                        <h1>{event.name}</h1>
+                        <p>{event.description}</p>
+                    </div>
                 </Jumbotron>
                 
                 <div id='createT' className='container'>
