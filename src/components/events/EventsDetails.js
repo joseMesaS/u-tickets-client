@@ -6,7 +6,7 @@ import TicketsList from '../tickets/TicketsList'
 import CreateTicketForm from '../tickets/CreateTicketForm'
 import {Link} from 'react-router-dom'
 import { logout} from '../../actions/users'
-import {Jumbotron, Button, Popover, Tooltip, Modal} from 'react-bootstrap'
+import {Jumbotron, Button, Tooltip, OverlayTrigger, Modal, Breadcrumb} from 'react-bootstrap'
 import './EventsDetails.css'
 
 
@@ -41,6 +41,18 @@ class EventsDetails extends PureComponent {
     
         if (tickets === null || event === null ) return 'Loading...1'
 
+        const tooltipLogout = (
+            <Tooltip id="tooltip">
+                <strong>Logout</strong> 
+            </Tooltip>
+        )
+    
+        const tooltipLogin = (
+            <Tooltip id="tooltip">
+                <strong>Login</strong> 
+            </Tooltip>
+        )
+
         return (
 
             <div>
@@ -57,9 +69,21 @@ class EventsDetails extends PureComponent {
                     </Modal.Footer>
                 </Modal>
 
-                <Jumbotron className='header ' style={{ backgroundImage: `url(${event.thumbnail})`, backgroundSize: 'contain', color: 'white' }}>
-                    {!this.props.authenticated && <Link  className='log' to='/login'> login </Link>}
-                    {this.props.authenticated && <a className='log' onClick={this.props.logout} >logout</a>}
+                <Jumbotron className='header ' style={{ backgroundImage: `url(${event.thumbnail})`, backgroundSize: 'contain', color: 'black' }}>
+
+                    <Breadcrumb className='breadcrumbs'>
+                        <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Event</Breadcrumb.Item>
+                    </Breadcrumb>
+
+                    {!this.props.authenticated && 
+                        <OverlayTrigger placement="bottom" overlay={tooltipLogin} >
+                        <Link  className='log' to='/login'><i class="fas fa-user-astronaut"></i></Link>
+                        </OverlayTrigger>}
+                    {this.props.authenticated && 
+                        <OverlayTrigger placement="bottom" overlay={tooltipLogout} >
+                        <a className='log' onClick={this.props.logout} alt="Login"><i class="fas fa-user-astronaut"></i></a>
+                        </OverlayTrigger>}
                     <div className="headings">
                         <h1>{event.name}</h1>
                         <p>{event.description}</p>

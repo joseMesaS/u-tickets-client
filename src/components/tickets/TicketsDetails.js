@@ -5,7 +5,7 @@ import { editTicket, getTicketsPerEvent} from '../../actions/tickets'
 import Comments from '../comments/Comments'
 import EditTicketForm from './EditTicketForm'
 import {ticketRisk} from '../../ticketRiskLogic'
-import {Jumbotron, Well,Modal, Button, Image  } from 'react-bootstrap'
+import {Jumbotron, Well,Modal, Button, Image, Tooltip, OverlayTrigger, Breadcrumb  } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import './TicketsDetails.css'
 import { logout} from '../../actions/users'
@@ -51,13 +51,38 @@ class TicketsDetails extends PureComponent {
     const risk = ticketRisk(customers[ticket.user_id].tickets_offered,
       ticket.price,avgPrice,ticket.time_of_creation,ticketsInfo[ticket.id].comments_received)
 
+    const tooltipLogout = (
+      <Tooltip id="tooltip">
+        <strong>Logout</strong> 
+      </Tooltip>
+    )
+
+    const tooltipLogin = (
+      <Tooltip id="tooltip">
+        <strong>Login</strong> 
+      </Tooltip>
+    )
+
     return (
 
       <div>
 
-         <Jumbotron className='header '>
-          {!this.props.authenticated && <Link  className='log' to='/login'> login </Link>}
-          {this.props.authenticated && <a className='log' onClick={this.props.logout} >logout</a>}
+         <Jumbotron className='header ' style={{backgroundColor: 'rgb(109, 138, 249)'}}>
+
+          <Breadcrumb className='breadcrumbs'>
+              <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
+              <Breadcrumb.Item href={`/home/events/${ticket.event_id}`}>Event</Breadcrumb.Item>
+              <Breadcrumb.Item active>Ticket</Breadcrumb.Item>
+          </Breadcrumb>
+
+          {!this.props.authenticated && 
+            <OverlayTrigger placement="bottom" overlay={tooltipLogin} >
+              <Link  className='log' to='/login'><i class="fas fa-user-astronaut"></i></Link>
+            </OverlayTrigger>}
+          {this.props.authenticated && 
+            <OverlayTrigger placement="bottom" overlay={tooltipLogout} >
+              <a className='log' onClick={this.props.logout} alt="Login"><i class="fas fa-user-astronaut"></i></a>
+            </OverlayTrigger>}
           <h1>Ticket from {customers[ticket.user_id].user_name}</h1>
           <p>Risk: {risk}%</p>
           <h2>{ticket.price}&euro;</h2>
@@ -77,7 +102,7 @@ class TicketsDetails extends PureComponent {
         
         <div id='infoBody' className='container'>
           <div className='frame'>
-           <Image className='ticketPicture' src={ticket.thumbnail===null ? null : 'https://media.peugeot.com.mt/image/47/7/308sw-estatecars-thumbnail.108613.108613.137477.6.jpg?autocrop=1'} responsive rounded/>
+           <Image className='ticketPicture' src={ticket.thumbnail===null ? 'https://canadatwoway.com/wp-content/uploads/2017/11/No_Image_Available.jpg' : ticket.thumbnail } responsive rounded/>
           </div>
           <div className='info'>
             Description: {ticket.description}

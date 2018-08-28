@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import EventsList from '../events/EventsList'
 import CreateEventForm from '../events/CreateEventForm'
 import './HomePage.css'
-import {Jumbotron, Button, Popover, Tooltip, Modal} from 'react-bootstrap'
+import {Jumbotron, Button, Tooltip, Modal, OverlayTrigger} from 'react-bootstrap'
 
 
 class Home extends PureComponent {
@@ -34,15 +34,18 @@ class Home extends PureComponent {
 
   render() {
 
-    const popover = (
-      <Popover id="modal-popover" title="popover">
-        very popover. such engagement
-      </Popover>
+    const tooltipLogout = (
+      <Tooltip id="tooltip">
+        <strong>Logout</strong> 
+      </Tooltip>
     )
 
-    const tooltip = <Tooltip id="modal-tooltip">wow.</Tooltip>
+    const tooltipLogin = (
+      <Tooltip id="tooltip">
+        <strong>Login</strong> 
+      </Tooltip>
+    )
     
-
     return (
       <div className='main'>
        
@@ -58,11 +61,20 @@ class Home extends PureComponent {
           </Modal.Footer>
         </Modal>
 
-        <Jumbotron className='header '>
-          {!this.props.authenticated && <Link  className='log' to='/login'> login </Link>}
-          {this.props.authenticated && <a className='log' onClick={this.props.logout} >logout</a>}
-          <h1>Utickets</h1>
-          <p>get a ticket for your favorite event and we pick you up there!</p>
+        <Jumbotron className='header ' style={{ backgroundImage: `url(https://www.edmtunes.com/wp-content/uploads/2018/04/7.jpg)`, backgroundPositionY: 'center', backgroundSize: 'cover'}}>
+          {!this.props.authenticated && 
+            <OverlayTrigger placement="bottom" overlay={tooltipLogin} >
+              <Link  className='log' to='/login'><i class="fas fa-user-astronaut"></i></Link>
+            </OverlayTrigger>}
+          {this.props.authenticated && 
+            <OverlayTrigger placement="bottom" overlay={tooltipLogout} >
+              <a className='log' onClick={this.props.logout} alt="Login"><i class="fas fa-user-astronaut"></i></a>
+            </OverlayTrigger>}
+          
+          <div className='headingsHome'>
+            <h1>Utickets</h1>
+            <p>get a ticket for your favorite event and we pick you up there!</p>
+          </div>
         </Jumbotron>
        
         <EventsList/>
