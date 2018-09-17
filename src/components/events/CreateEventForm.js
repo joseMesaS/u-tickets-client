@@ -1,13 +1,19 @@
 import React, {PureComponent} from 'react';
 import {Form, FormGroup, Col, FormControl, ControlLabel, Button} from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 import './CreateEventForm.css';
 
 export default class CreateEventForm extends PureComponent {
-	state = {}
+	state = {
+        startingTime: moment(),
+        endTime: moment()
+    }
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.props.onSubmit(this.state);
+        this.props.onSubmit(this.state);
 	}
 
 	handleChange = (event) => {
@@ -15,6 +21,18 @@ export default class CreateEventForm extends PureComponent {
 
         this.setState({
             [name]: value
+        });
+    }
+
+    handleStartDate = (date) => {   
+        this.setState({
+            startingTime: date
+        });
+    }
+
+    handleEndDate = (date) => {   
+        this.setState({
+            endTime: date
         });
     }
 
@@ -50,9 +68,15 @@ export default class CreateEventForm extends PureComponent {
                             Starting time
                         </Col>
                         <Col sm={9}>
-                            <FormControl type="text" name="startingTime" value={
-                                    this.state.startingTime || ''
-                                } onChange={ this.handleChange }/>
+                            <DatePicker
+                                selected={this.state.startingTime}
+                                onChange={this.handleStartDate}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                dateFormat="LLL"
+                                timeCaption="time"
+                            />
                         </Col>
                     </FormGroup>
 
@@ -61,9 +85,15 @@ export default class CreateEventForm extends PureComponent {
                             End Time
                         </Col>
                         <Col sm={9}>
-                            <FormControl type="text" name="endTime" value={
-                                    this.state.endTime || ''
-                                } onChange={ this.handleChange }  />
+                            <DatePicker
+                                    selected={this.state.endTime}
+                                    onChange={this.handleEndDate}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    timeIntervals={15}
+                                    dateFormat="LLL"
+                                    timeCaption="time"
+                                />
                         </Col>
                     </FormGroup>
 

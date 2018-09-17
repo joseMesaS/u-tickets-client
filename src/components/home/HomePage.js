@@ -24,7 +24,7 @@ class Home extends PureComponent {
   }
 
   handleSubmit = (data) => {
-    this.props.createEvent(data.name, data.description, data.startingTime, data.endTime, data.thumbnail);
+    this.props.createEvent(data.name, data.description, new Date(data.startingTime).toISOString(), new Date(data.endTime).toISOString(), data.thumbnail);
 	}
 
   render() {
