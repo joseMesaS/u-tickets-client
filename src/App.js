@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
-import LoginPage from './components/login/LoginPage'
-import SignupPage from './components/signup/SignupPage'
-import './App.css'
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import LoginPage from './components/login/LoginPage';
+import SignupPage from './components/signup/SignupPage';
 import HomePage from './components/home/HomePage';
-import EventsDetails from './components/events/EventsDetails'
-import TicketsDetails from './components/tickets/TicketsDetails'
+import EventsDetails from './components/events/EventsDetails';
+import TicketsDetails from './components/tickets/TicketsDetails';
 
 class App extends Component {
   render() {
@@ -26,4 +25,4 @@ class App extends Component {
     )
   }
 }
-export default App
+export default App;

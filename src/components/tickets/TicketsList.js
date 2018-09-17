@@ -1,34 +1,31 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {getUsers, logout} from '../../actions/users'
-import {ticketRisk} from '../../ticketRiskLogic'
-import './TicketsList.css'
-import {ListGroupItem, ListGroup} from 'react-bootstrap'
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {ListGroupItem, ListGroup} from 'react-bootstrap';
+import {getUsers} from '../../actions/users';
+import {ticketRisk} from '../../ticketRiskLogic';
+import './TicketsList.css';
 
 const riskToColors = (risk) => {
   if(risk < 35) {
-    return 'green'
+    return 'green';
   }else if(risk < 65) {
-    return 'yellow'
+    return 'yellow';
   }else {
-    return 'red'
+    return 'red';
   }
-}
+};
 
 class TicketsList extends PureComponent {
-  componentWillMount() {
-    
-  }
 
   render() {
-    const {  tickets, customers, ticketsInfo } = this.props
-    if (tickets === null || customers === null || ticketsInfo === null ) return 'Loading...'
+    const {  tickets, customers, ticketsInfo } = this.props;
+    if (tickets === null || customers === null || ticketsInfo === null ) return 'Loading...';
 
     const avgPrice = Object.values(tickets)
       .reduce((acc, ticket) => {
         return  acc + ticket.price
-         },0) / Object.values(tickets).length
+         },0) / Object.values(tickets).length;
 
     const ticketsItem = tickets.map(ticket =>
       <Link className='ticketItem' key={ticket.id} to={`/home/events/${this.props.eventId}/tickets/${ticket.id}`} >
@@ -38,9 +35,9 @@ class TicketsList extends PureComponent {
           </p>
           <h4>{ticket.description}{' '}{ticket.price}&euro;</h4></div>
         }>
-          <p> Seller: {customers[ticket.user_id].user_name} </p>
+          <span> Seller: {customers[ticket.user_id].user_name} </span>
         </ListGroupItem>
-      </Link>)
+      </Link>);
 
     return (
 
@@ -48,14 +45,14 @@ class TicketsList extends PureComponent {
        {ticketsItem}
       </ListGroup>
 
-    )
+    );
   }
 }
 
 const mapStateToProps =( state ) => ({
-    tickets: state.ticketsPerEvent === null ? null : Object.values(state.ticketsPerEvent),
-    customers: state.Customers === null ? null : state.Customers,
-    ticketsInfo: state.TicketsInfo === null ? null : state.TicketsInfo
-  })
+  tickets: state.ticketsPerEvent === null ? null : Object.values(state.ticketsPerEvent),
+  customers: state.Customers === null ? null : state.Customers,
+  ticketsInfo: state.TicketsInfo === null ? null : state.TicketsInfo
+});
 
 export default connect(mapStateToProps,{getUsers} )(TicketsList)

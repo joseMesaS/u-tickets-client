@@ -1,26 +1,26 @@
-import React, {PureComponent} from 'react'
-import './LoginForm.css'
-import {Form, FormGroup, Col, FormControl, ControlLabel, Button} from 'react-bootstrap'
+import React, {PureComponent} from 'react';
+import './LoginForm.css';
+import {Form, FormGroup, Col, FormControl, ControlLabel, Button} from 'react-bootstrap';
 
 export default class LoginForm extends PureComponent {
 	state = {}
 
 	handleSubmit = (e) => {
-		e.preventDefault()
-		this.props.onSubmit(this.state)
+		e.preventDefault();
+		this.props.onSubmit(this.state);
 	}
 
 	handleChange = (event) => {
-    const {name, value} = event.target
+		const {name, value} = event.target;
 
-    this.setState({
-      [name]: value
-    })
-  }
+		this.setState({
+			[name]: value
+		});
+  	}
 
 	render() {
 		return (
-      <div className="login-form">
+      		<div className="login-form">
 				<Form onSubmit={this.handleSubmit} horizontal>
 					<FormGroup controlId="formHorizontalEmail">
 						<Col componentClass={ControlLabel} sm={3}>
@@ -49,6 +49,7 @@ export default class LoginForm extends PureComponent {
 					</FormGroup>
 
 				</Form>
-		  </div>)
+			</div>
+		);
 	}
 }

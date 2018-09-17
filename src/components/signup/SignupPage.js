@@ -1,13 +1,13 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
-import {signup} from '../../actions/users'
-import SignupForm from './SignupForm'
-import {Redirect, Link} from 'react-router-dom'
-import './SignupPage.css'
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import {Redirect, Link} from 'react-router-dom';
+import {signup} from '../../actions/users';
+import SignupForm from './SignupForm';
+import './SignupPage.css';
 
 class SignupPage extends PureComponent {
 	handleSubmit = (data) => {
-		this.props.postSignup(data.name, data.lastName, data.email, data.phoneNumber, data.password)
+		this.props.postSignup(data.name, data.lastName, data.email, data.phoneNumber, data.password);
 	}
 
 	render() {
@@ -16,8 +16,6 @@ class SignupPage extends PureComponent {
 		)
 
 		return (
-			
-
 			<div className='signupPage'>
 				<div className='signupBox'>
 					<h1>Sign up</h1>
@@ -29,7 +27,7 @@ class SignupPage extends PureComponent {
 					already a member? <Link to='/login' ><p>to login</p></Link>
 				</div>
 			</div>
-		)
+		);
 	}
 }
 
@@ -37,6 +35,6 @@ const mapStateToProps = function (state) {
 	return {
 		signup: state.signup
 	}
-}
+};
 
 export default connect(mapStateToProps, {postSignup: signup})(SignupPage)

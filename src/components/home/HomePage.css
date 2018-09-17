@@ -20,8 +20,6 @@
     border-radius: 50%;
     border: 1px solid white;
     padding: 0 6px;
-   
-    
 }
 
 .log:hover {
@@ -36,7 +34,6 @@
 }
 
 .headingsHome {
-
     padding: 5px;
     background-color: rgba(255, 255, 255, 0.6);
 }

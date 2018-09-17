@@ -1,29 +1,26 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
-import {getEvents} from '../../actions/events'
-import { editTicket, getTicketsPerEvent} from '../../actions/tickets'
-import Comments from '../comments/Comments'
-import EditTicketForm from './EditTicketForm'
-import {ticketRisk} from '../../ticketRiskLogic'
-import {Jumbotron, Well,Modal, Button, Image, Tooltip, OverlayTrigger, Breadcrumb  } from 'react-bootstrap'
-import {Link} from 'react-router-dom'
-import './TicketsDetails.css'
-import { logout} from '../../actions/users'
-
-
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import {Jumbotron, Well,Modal, Button, Image, Tooltip, OverlayTrigger, Breadcrumb  } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {getEvents} from '../../actions/events';
+import { editTicket, getTicketsPerEvent} from '../../actions/tickets';
+import Comments from '../comments/Comments';
+import EditTicketForm from './EditTicketForm';
+import {ticketRisk} from '../../ticketRiskLogic';
+import { logout} from '../../actions/users';
+import './TicketsDetails.css';
 
 class TicketsDetails extends PureComponent {
   state = {editMode: false}
 
   componentWillMount = () => {
-    
-    this.props.getTicketsPerEvent(this.props.match.params.eventId)
+    this.props.getTicketsPerEvent(this.props.match.params.eventId);
   }
 
   editMode = () => {
     this.setState({
       editMode: this.state.editMode === false ? true : false
-    })
+    });
   }
 
   handleClose = () => {
@@ -34,34 +31,33 @@ class TicketsDetails extends PureComponent {
     this.setState({ editMode: true });
   }
 
-
   editTicket = (data) => {
-    this.props.editTicket(this.props.match.params.id, data)
+    this.props.editTicket(this.props.match.params.id, data);
   }
 
   render() {
-    const { ticket, tickets, customers, ticketsInfo } = this.props
+    const { ticket, tickets, customers, ticketsInfo } = this.props;
     
-    if (ticket === null || customers === null || ticketsInfo === null || tickets === null ) return 'Loading...'
+    if (ticket === null || customers === null || ticketsInfo === null || tickets === null ) return 'Loading...';
 
     const avgPrice = Object.values(tickets)
       .reduce((acc, currentticket) => {
-        return  acc + currentticket.price },0) / Object.values(tickets).length
+        return  acc + currentticket.price },0) / Object.values(tickets).length;
 
     const risk = ticketRisk(customers[ticket.user_id].tickets_offered,
-      ticket.price,avgPrice,ticket.time_of_creation,ticketsInfo[ticket.id].comments_received)
+      ticket.price,avgPrice,ticket.time_of_creation,ticketsInfo[ticket.id].comments_received);
 
     const tooltipLogout = (
       <Tooltip id="tooltip">
         <strong>Logout</strong> 
       </Tooltip>
-    )
+    );
 
     const tooltipLogin = (
       <Tooltip id="tooltip">
         <strong>Login</strong> 
       </Tooltip>
-    )
+    );
 
     return (
 
@@ -114,7 +110,7 @@ class TicketsDetails extends PureComponent {
 
       </div>
 
-    )
+    );
   }
 }
 
@@ -124,6 +120,6 @@ const mapStateToProps = (state, props) => ({
   authenticated: state.currentUser !== null,
   customers: state.Customers === null ? null : state.Customers,
   ticketsInfo: state.TicketsInfo === null ? null : state.TicketsInfo
-})
+});
 
 export default connect(mapStateToProps, { getEvents, editTicket, getTicketsPerEvent, logout})(TicketsDetails)

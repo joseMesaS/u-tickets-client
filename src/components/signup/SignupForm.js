@@ -1,27 +1,26 @@
-import React, {PureComponent} from 'react'
-import './SignupForm.css'
+import React, {PureComponent} from 'react';
 import {Form, FormGroup, Col, FormControl, ControlLabel, Button} from 'react-bootstrap'
-
+import './SignupForm.css';
 
 export default class SignupForm extends PureComponent {
 	state = {}
 
 	handleSubmit = (e) => {
-		e.preventDefault()
-		this.props.onSubmit(this.state)
+		e.preventDefault();
+		this.props.onSubmit(this.state);
 	}
 
 	handleChange = (event) => {
-    const {name, value} = event.target
+		const {name, value} = event.target;
 
-    this.setState({
-      [name]: value
-    })
-  }
+		this.setState({
+			[name]: value
+		});
+	}
 
 	render() {
 		return (
-      <div className="signup-form">
+      		<div className="signup-form">
 
 				<Form onSubmit={this.handleSubmit} horizontal>
 
@@ -92,11 +91,11 @@ export default class SignupForm extends PureComponent {
 					</FormGroup>
 
 					{
-  					this.state.password &&
-  					this.state.confirmPassword &&
-  					this.state.password !== this.state.confirmPassword &&
-  					<p style={{color:'red'}}>The passwords do not match!</p>
-  				}
+						this.state.password &&
+						this.state.confirmPassword &&
+						this.state.password !== this.state.confirmPassword &&
+						<p style={{color:'red'}}>The passwords do not match!</p>
+  					}
 
 					<FormGroup>
 						
@@ -105,7 +104,7 @@ export default class SignupForm extends PureComponent {
 					</FormGroup>
 
 				</Form>
-      </div>
-		)
+      		</div>
+		);
 	}
 }

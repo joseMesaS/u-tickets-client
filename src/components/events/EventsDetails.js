@@ -1,62 +1,55 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
-import {getEvents} from '../../actions/events'
-import {getTicketsPerEvent, createTicket} from '../../actions/tickets'
-import TicketsList from '../tickets/TicketsList'
-import CreateTicketForm from '../tickets/CreateTicketForm'
-import {Link} from 'react-router-dom'
-import { logout} from '../../actions/users'
-import {Jumbotron, Button, Tooltip, OverlayTrigger, Modal, Breadcrumb} from 'react-bootstrap'
-import './EventsDetails.css'
-
-
-
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import {Jumbotron, Button, Tooltip, OverlayTrigger, Modal, Breadcrumb} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {getEvents} from '../../actions/events';
+import {getTicketsPerEvent, createTicket} from '../../actions/tickets';
+import TicketsList from '../tickets/TicketsList';
+import CreateTicketForm from '../tickets/CreateTicketForm';
+import { logout} from '../../actions/users';
+import './EventsDetails.css';
 
 class EventsDetails extends PureComponent {
     state = {createMode: false}
    
     componentWillMount() {
-        this.props.getTicketsPerEvent(this.props.match.params.eventId)
-        if (this.props.event === null) this.props.getEvents()
-       
+        this.props.getTicketsPerEvent(this.props.match.params.eventId);
+        if (this.props.event === null) this.props.getEvents();
     }
 
     handleSubmit = async (data) => {
-        this.props.createTicket(this.props.match.params.eventId, data.description, Number(data.price), data.thumbnail)
-        this.setState({createMode: false})
-        this.props.getTicketsPerEvent(this.props.match.params.eventId)
-
+        this.props.createTicket(this.props.match.params.eventId, data.description, Number(data.price), data.thumbnail);
+        this.setState({createMode: false});
+        this.props.getTicketsPerEvent(this.props.match.params.eventId);
     }
     
     handleClose = () => {
         this.setState({ createMode: false });
-      }
+    }
     
-      handleShow = () => {
+    handleShow = () => {
         this.setState({ createMode: true });
-      }
+    }
 
-     render() {
-        const { event, tickets }= this.props
-    
-        if (tickets === null || event === null ) return 'Loading...1'
+    render() {
+        const { event, tickets }= this.props;
+
+        if (tickets === null || event === null ) return 'Loading...';
 
         const tooltipLogout = (
             <Tooltip id="tooltip">
                 <strong>Logout</strong> 
             </Tooltip>
-        )
-    
+        );
+
         const tooltipLogin = (
             <Tooltip id="tooltip">
                 <strong>Login</strong> 
             </Tooltip>
-        )
+        );
 
         return (
-
             <div>
-
                 <Modal show={this.state.createMode} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Create a new event</Modal.Title>
@@ -82,7 +75,7 @@ class EventsDetails extends PureComponent {
                         </OverlayTrigger>}
                     {this.props.authenticated && 
                         <OverlayTrigger placement="bottom" overlay={tooltipLogout} >
-                        <a className='log' onClick={this.props.logout} alt="Login"><i class="fas fa-user-astronaut"></i></a>
+                        <a className='log' onClick={this.props.logout} alt="Login"><i className="fas fa-user-astronaut"></i></a>
                         </OverlayTrigger>}
                     <div className="headings">
                         <h1>{event.name}</h1>
@@ -93,19 +86,21 @@ class EventsDetails extends PureComponent {
                 <div id='createT' className='container'>
                     {this.props.authenticated && <Button onClick={this.handleShow} bsSize="large" block>Create Ticket</Button>}
                 </div>
-              
+                
                 <TicketsList eventId={this.props.match.params.eventId} />
             </div>
 
-        )
-  }
+        );
+    }
 }
 
 const mapStateToProps = (state,props) => ({
   event: state.events && state.events[props.match.params.eventId],
-  authenticated: state.currentUser !== null,
-  tickets: state.ticketsPerEvent === null ? null : Object.values(state.ticketsPerEvent).sort((a, b) => b.id - a.id),
-  ticketsInfo: state.TicketsInfo === null ? null : state.TicketsInfo
-})
+  authenticated: state.currentUser !== null
+});
 
 export default connect(mapStateToProps, {getTicketsPerEvent, getEvents, createTicket, logout})(EventsDetails)
+
+// ,
+//   tickets: state.ticketsPerEvent === null ? null : Object.values(state.ticketsPerEvent).sort((a, b) => b.id - a.id),
+//   ticketsInfo: state.TicketsInfo === null ? null : state.TicketsInfo

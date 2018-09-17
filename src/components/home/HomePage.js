@@ -1,22 +1,18 @@
-import React, {PureComponent} from 'react'
-import {getUsers, logout} from '../../actions/users'
-import {getEvents, createEvent} from '../../actions/events'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import EventsList from '../events/EventsList'
-import CreateEventForm from '../events/CreateEventForm'
-import './HomePage.css'
-import {Jumbotron, Button, Tooltip, Modal, OverlayTrigger} from 'react-bootstrap'
-
+import React, {PureComponent} from 'react';
+import {Jumbotron, Button, Tooltip, Modal, OverlayTrigger} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {logout} from '../../actions/users';
+import {getEvents, createEvent} from '../../actions/events';
+import EventsList from '../events/EventsList';
+import CreateEventForm from '../events/CreateEventForm';
+import './HomePage.css';
 
 class Home extends PureComponent {
   state = {createMode: false}
 
   componentWillMount() {
-    
-    if (this.props.users === null) this.props.getUsers()
-    if (this.props.events === null) this.props.getEvents()
-    
+    if (this.props.events === null) this.props.getEvents();
   }
 
   handleClose = () => {
@@ -27,9 +23,8 @@ class Home extends PureComponent {
     this.setState({ createMode: true });
   }
 
-
   handleSubmit = (data) => {
-    this.props.createEvent(data.name, data.description, data.startingTime, data.endTime, data.thumbnail)
+    this.props.createEvent(data.name, data.description, data.startingTime, data.endTime, data.thumbnail);
 	}
 
   render() {
@@ -38,13 +33,13 @@ class Home extends PureComponent {
       <Tooltip id="tooltip">
         <strong>Logout</strong> 
       </Tooltip>
-    )
+    );
 
     const tooltipLogin = (
       <Tooltip id="tooltip">
         <strong>Login</strong> 
       </Tooltip>
-    )
+    );
     
     return (
       <div className='main'>
@@ -68,7 +63,7 @@ class Home extends PureComponent {
             </OverlayTrigger>}
           {this.props.authenticated && 
             <OverlayTrigger placement="bottom" overlay={tooltipLogout} >
-              <a className='log' onClick={this.props.logout} alt="Login"><i class="fas fa-user-astronaut"></i></a>
+              <a className='log' onClick={this.props.logout} alt="Login"><i className="fas fa-user-astronaut"></i></a>
             </OverlayTrigger>}
           
           <div className='headingsHome'>
@@ -82,15 +77,13 @@ class Home extends PureComponent {
         {this.props.authenticated && <a  className='create' onClick={this.handleShow} >Create Event</a>}
         
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => ({
-  users: state.users === null ? null : state.users,
   authenticated: state.currentUser !== null,
   events: state.events === null ? null : state.events
+});
 
-})
-
-export default connect(mapStateToProps, { getUsers, logout, getEvents, createEvent})(Home)
+export default connect(mapStateToProps, { logout, getEvents, createEvent})(Home)

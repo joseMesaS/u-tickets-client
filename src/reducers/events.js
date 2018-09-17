@@ -1,4 +1,4 @@
-import {UPDATE_EVENTS, ADD_EVENT} from '../actions/events'
+import {UPDATE_EVENTS, ADD_EVENT} from '../actions/events';
 
 export default (state = null, {type, payload}) => {
   switch (type) {
@@ -6,13 +6,13 @@ export default (state = null, {type, payload}) => {
       return payload.reduce((events, event) => {
         events[event.id] = event
         return events
-      }, {})
+      }, {});
     case ADD_EVENT:
       return {
         ...state,
         [payload.id]: payload
-      }
+      };
     default:
-      return state
+      return state;
   }
 }

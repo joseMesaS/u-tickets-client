@@ -1,9 +1,9 @@
 .login-form label {
-    display: block;
-  }
+  display: block;
+}
 
-  .submitBtn {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+.submitBtn {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}

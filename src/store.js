@@ -1,23 +1,17 @@
-import {createStore, applyMiddleware, combineReducers, compose} from 'redux'
-import ReduxThunk from 'redux-thunk'
-import reducers from './reducers'
-import {storeJwt, socketIo} from './middleware'
+import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
+import ReduxThunk from 'redux-thunk';
+import {storeJwt} from './middleware';
+import reducers from './reducers';
 
+const reducer = combineReducers(reducers);
 
-const reducer = combineReducers(reducers)
-
-const devTools = window.devToolsExtension ? window.devToolsExtension() : f => f
-
+const devTools = window.devToolsExtension ? window.devToolsExtension() : f => f;
 
 const enhancer = compose(
 	applyMiddleware(ReduxThunk, storeJwt),
 	devTools
-)
+);
 
-const store = createStore(reducer, enhancer)
+const store = createStore(reducer, enhancer);
 
-// when JWT was coming from localStorage, connect via websockets
-const initialCurrentUser = store.getState().currentUser
-
-
-export default store
+export default store;

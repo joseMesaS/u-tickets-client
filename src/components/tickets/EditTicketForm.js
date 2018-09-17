@@ -1,21 +1,21 @@
-import React, {PureComponent} from 'react'
-import {Form, FormGroup, Col, FormControl, ControlLabel, Button} from 'react-bootstrap'
+import React, {PureComponent} from 'react';
+import {Form, FormGroup, Col, FormControl, ControlLabel, Button} from 'react-bootstrap';
 
 export default class EditTicketForm extends PureComponent {
 	state = {}
 
 	handleSubmit = (e) => {
-		e.preventDefault()
-		this.props.onSubmit(this.state)
+		e.preventDefault();
+		this.props.onSubmit(this.state);
 	}
 
 	handleChange = (event) => {
-        const {name, value} = event.target
+        const {name, value} = event.target;
 
         this.setState({
-        [name]: value
-    })
-  }
+            [name]: value
+        });
+    }
 
 	render() {
 		return (
@@ -64,6 +64,6 @@ export default class EditTicketForm extends PureComponent {
 
                 </Form>
             </div>
-		)
+		);
 	}
 }
